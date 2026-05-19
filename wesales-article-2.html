@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>なぜ私は、営業マンをメールから解放しようと思ったのか。</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  body {
+    background: #f7f9fc;
+    color: #0d1f3c;
+    font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    font-weight: 400;
+    line-height: 1.9;
+    font-size: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .masthead {
+    border-bottom: 3px double #0d1f3c;
+    padding: 18px 16px 14px;
+    text-align: center;
+    background: #f7f9fc;
+    width: 100%;
+  }
+  .masthead-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: #7a8fa8;
+    text-transform: uppercase;
+  }
+  .masthead-brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #0d1f3c;
+    margin-top: 4px;
+  }
+
+  .article-wrap {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .category {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #2563c0;
+    border-top: 2px solid #2563c0;
+    padding-top: 6px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(24px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.35;
+    color: #0d1f3c;
+    margin-bottom: 24px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  h1 em { font-style: normal; color: #2563c0; }
+
+  .deck {
+    font-size: clamp(14px, 2.2vw, 17px);
+    line-height: 1.75;
+    color: #2d4163;
+    border-left: 3px solid #2563c0;
+    padding-left: 16px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid #c8d8ec;
+    border-bottom: 1px solid #c8d8ec;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+  .byline-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #0d1f3c;
+    display: flex; align-items: center; justify-content: center;
+    color: #f7f9fc;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .byline-info { flex: 1; min-width: 160px; }
+  .byline-name { font-size: 13px; font-weight: 700; color: #0d1f3c; }
+  .byline-meta { font-size: 10px; color: #7a8fa8; margin-top: 2px; font-family: monospace; }
+
+  .body p {
+    margin-bottom: 1.7em;
+    color: #2d4163;
+    font-size: clamp(14px, 2vw, 16px);
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  .body p strong { color: #0d1f3c; font-weight: 700; }
+
+  h2 {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: #0d1f3c;
+    margin: 48px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0d1f3c;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
+  .pull-quote {
+    font-size: clamp(17px, 3.5vw, 26px);
+    font-weight: 700;
+    line-height: 1.6;
+    color: #0d1f3c;
+    border-top: 3px solid #0d1f3c;
+    border-bottom: 1px solid #c8d8ec;
+    padding: 24px 0;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  .scene-block {
+    background: #0d1f3c;
+    color: #f7f9fc;
+    padding: 32px 28px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .scene-block::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: #2563c0;
+    opacity: 0.15;
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+  }
+  .scene-block-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(200,216,236,0.7);
+    margin-bottom: 16px;
+    font-family: monospace;
+  }
+  .scene-block p {
+    font-size: clamp(14px, 2vw, 16px);
+    line-height: 1.85;
+    color: rgba(247,249,252,0.85);
+    margin-bottom: 1em;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  .scene-block p:last-child { margin-bottom: 0; }
+  .scene-block strong { color: #f7f9fc; font-weight: 700; }
+
+  .highlight-box {
+    background: #e8f0fb;
+    border-left: 4px solid #2563c0;
+    padding: 20px;
+    margin: 36px 0;
+    font-size: clamp(13px, 2vw, 15px);
+    line-height: 1.8;
+    color: #0d1f3c;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  .highlight-box strong:first-child {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #7a8fa8;
+    margin-bottom: 8px;
+    font-family: monospace;
+    font-weight: 400;
+  }
+
+  .cta-block {
+    background: #0d1f3c;
+    color: #f7f9fc;
+    padding: 44px 24px;
+    margin: 56px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    border: 36px solid #2563c0;
+    border-radius: 50%;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  .cta-eyebrow { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: #3b7de8; margin-bottom: 16px; font-family: monospace; }
+  .cta-headline { font-size: clamp(20px, 4vw, 30px); font-weight: 700; line-height: 1.5; margin-bottom: 14px; }
+  .cta-sub { font-size: clamp(13px, 2vw, 14px); color: rgba(247,249,252,0.65); margin-bottom: 32px; line-height: 1.8; }
+  .cta-btn {
+    display: inline-block;
+    background: #2563c0;
+    color: #f7f9fc;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 36px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-btn:hover { background: #3b7de8; }
+  .cta-note { font-size: 11px; color: rgba(247,249,252,0.4); margin-top: 14px; font-family: monospace; }
+
+  .source-note {
+    font-family: monospace;
+    font-size: 11px;
+    color: #7a8fa8;
+    border-top: 1px solid #c8d8ec;
+    padding-top: 28px;
+    margin-top: 56px;
+    line-height: 2;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
+  @media (max-width: 480px) {
+    .article-wrap { padding: 32px 16px 64px; }
+    .scene-block { padding: 24px 16px; }
+    .cta-block { padding: 36px 16px; }
+    .pull-quote { padding: 20px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-label">WeSales AI — Founder's Story</div>
+  <div class="masthead-brand">営業の現場から、データで考える。</div>
+</div>
+
+<article class="article-wrap">
+
+  <span class="category">創業ストーリー</span>
+
+  <h1>なぜ私は、営業マンを<em>メールから解放</em>しようと思ったのか。</h1>
+
+  <p class="deck">
+    交流会に行って、商談して、頑張った。でもその夜、名刺の山を前に「疲れたし、まあいいか」と思った。あの瞬間が、WeSales AIの原点です。
+  </p>
+
+  <div class="byline">
+    <div class="byline-avatar">木</div>
+    <div class="byline-info">
+      <div class="byline-name">木村 海樹</div>
+      <div class="byline-meta">WeSales株式会社 代表取締役 — 2026年5月</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <p>正直に話します。</p>
+
+    <p>私は、営業が得意なわけではありませんでした。交流会に行くのも、知らない人に話しかけるのも、それなりに体力がいります。それでも行く。名刺を交換する。商談につなげようとする。それが営業の仕事だと思っていたから。</p>
+
+    <p>でも、帰り道はいつもこうでした。</p>
+
+  </div>
+
+  <div class="scene-block">
+    <div class="scene-block-label">ある交流会の夜</div>
+    <p>名刺入れには30枚以上の名刺。「明日、全員にフォローしよう」と思いながら電車に乗る。でも体はすでに限界で、家に帰ったらそのままソファに倒れ込む。</p>
+    <p>翌朝、名刺の山を見る。<strong>「LINEやメッセンジャーを交換できなかった人には、わざわざ送らなくてもいいか」</strong>と思ってしまう。</p>
+    <p>結果、ほとんどの名刺が放置された。</p>
+  </div>
+
+  <div class="body">
+
+    <p>これは、怠慢だったのでしょうか。私はそう思っていました。でも今は違う考え方をしています。</p>
+
+    <p><strong>あれは、構造的な問題だった。</strong></p>
+
+    <h2>なぜメールはこんなにも、重いのか。</h2>
+
+    <p>考えてみてください。交流会に行くのも、商談するのも、提案書を作るのも、全部「営業の仕事」です。でもそのあとに待っているのは、リサーチして、文章を考えて、送信して、返信を待つという、話し言葉よりも遅い作業です。</p>
+
+    <p>なぜ営業マンが、タイピング作業に時間を使わなければならないのか。</p>
+
+    <p>1社あたりのリサーチとメール作成に、平均15分かかります。名刺30枚なら7.5時間。100枚なら25時間。これは「明日やろう」で解決できる問題ではありません。物理的に、不可能なのです。</p>
+
+  </div>
+
+  <div class="pull-quote">
+    疲れたを言い訳にしていたのではない。<br>そもそも、人間がやる仕事ではなかった。
+  </div>
+
+  <div class="body">
+
+    <h2>放置した名刺の先に、何が起きていたのか。</h2>
+
+    <p>あの夜、私が放置した名刺の相手は今どうしているのか。データを見て、背筋が冷たくなりました。</p>
+
+  </div>
+
+  <div class="highlight-box">
+    <strong>データ — 株式会社ハンモック調べ（2022年, n=301）</strong>
+    展示会・交流会後に翌日フォローできている企業はわずか<strong>1.0%</strong>。そして、フォローされなかった見込み客の約<strong>8割</strong>が、2年以内に競合他社から購入しています。
+  </div>
+
+  <div class="body">
+
+    <p>8割が、競合から買う。つまり私が「疲れたからいいや」と放置した相手の8割は、すでに別の誰かの顧客になっている可能性があります。</p>
+
+    <p>これは私だけの話ではありません。日本中の営業マンが、毎日同じことを繰り返しています。頑張って交流会に行き、名刺を交換し、帰り道に「フォローしなきゃ」と思いながら、結局できない。</p>
+
+    <p><strong>問題はやる気ではない。仕組みがないのです。</strong></p>
+
+    <h2>だから、作ることにした。</h2>
+
+    <p>WeSales AIを作ろうと思ったのは、難しい理由ではありません。</p>
+
+    <p>営業マンがやるべき仕事は、人と会うことです。話すことです。関係を作ることです。メールというタイピング作業は、AIがやればいい。リサーチも、文章作成も、返信対応も。</p>
+
+    <p>送信ボタンだけ押せばいい。そういうものを作ろうと思いました。</p>
+
+    <p>AIが書くのではありません。あなたをAIが再現する。だからテンプレート感がなく、自分らしいメールが届く。使えば使うほど精度が上がる。そういう設計にしました。</p>
+
+    <p>あの夜、放置した名刺の山を見て感じた「申し訳なさ」と「悔しさ」が、WeSales AIの原点です。もう同じ思いをする営業マンを、一人でも減らしたい。それだけです。</p>
+
+  </div>
+
+  <div class="pull-quote">
+    営業マンをメールから解放する。<br>それが、私たちのミッションです。
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-eyebrow">WeSales AI — 無料トライアル実施中</div>
+    <div class="cta-headline">送信ボタンだけ押せばいい。</div>
+    <div class="cta-sub">
+      名刺をスキャンするだけで、パーソナライズされた<br>
+      営業メールをAIが自動生成。月額980円から。
+    </div>
+    <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+    <div class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</div>
+  </div>
+
+  <div class="source-note">
+    出典 ／ 参考データ<br>
+    ・展示会名刺の活用状況調査：株式会社ハンモック（2022年、n=301）<br>
+    ・見込み客の競合流出率：Marketing Donut（2年以内に競合から購入する割合）<br>
+    ・メール作成時間の試算：WeSales株式会社調べ（1社あたりリサーチ〜送信の平均所要時間）
+  </div>
+
+</article>
+
+</body>
+</html>
