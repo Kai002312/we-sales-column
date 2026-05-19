@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>営業マンがメールに使う時間を計算したら、人生が終わっていた。</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #0d1f3c;
+    --ink-light: #2d4163;
+    --ink-muted: #7a8fa8;
+    --paper: #f7f9fc;
+    --paper-warm: #eef3fa;
+    --accent: #2563c0;
+    --accent-warm: #3b7de8;
+    --rule: #c8d8ec;
+    --highlight: #e8f0fb;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    line-height: 1.9;
+    font-size: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 18px 16px 14px;
+    text-align: center;
+    background: var(--paper);
+    width: 100%;
+  }
+  .masthead-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+  .masthead-brand {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+
+  .article-wrap {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .category {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-top: 2px solid var(--accent);
+    padding-top: 6px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(24px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 24px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .deck {
+    font-size: clamp(14px, 2.2vw, 17px);
+    line-height: 1.75;
+    color: var(--ink-light);
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+  .byline-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--paper);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .byline-info { flex: 1; min-width: 160px; }
+  .byline-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .byline-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); margin-top: 2px; }
+
+  .body p {
+    margin-bottom: 1.7em;
+    color: var(--ink-light);
+    font-size: clamp(14px, 2vw, 16px);
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  .body p strong { color: var(--ink); font-weight: 700; }
+
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 48px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
+  .pull-quote {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(17px, 3.5vw, 26px);
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--ink);
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 0;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  .data-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 20px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .data-block::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: var(--accent);
+    opacity: 0.15;
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+  }
+  .data-block-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,216,236,0.7);
+    margin-bottom: 20px;
+  }
+  .data-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    align-items: start;
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-left { display: flex; flex-direction: column; gap: 2px; }
+  .data-scenario { font-size: 12px; color: rgba(250,248,245,0.55); font-family: 'DM Mono', monospace; }
+  .data-cards { font-size: 12px; color: rgba(250,248,245,0.75); }
+  .data-time {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(18px, 4vw, 22px);
+    font-weight: 700;
+    color: var(--paper);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .data-time span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(250,248,245,0.55);
+    font-family: 'Noto Sans JP', sans-serif;
+    text-align: right;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .data-note {
+    font-size: 11px;
+    color: var(--accent-warm);
+    font-weight: 500;
+    text-align: right;
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .highlight-box {
+    background: var(--highlight);
+    border-left: 4px solid var(--accent);
+    padding: 20px;
+    margin: 36px 0;
+    font-size: clamp(13px, 2vw, 15px);
+    line-height: 1.8;
+    color: var(--ink);
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+  .highlight-box strong:first-child {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 36px 0;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .stat-cell { background: var(--paper); padding: 20px 12px; text-align: center; }
+  .stat-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 900;
+    color: var(--ink);
+    display: block;
+    line-height: 1.2;
+  }
+  .stat-num em { font-style: normal; color: var(--accent); }
+  .stat-label { font-size: clamp(10px, 1.5vw, 12px); color: var(--ink-muted); margin-top: 6px; line-height: 1.5; }
+
+  .big-number {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 40px 0;
+    border: 1px solid var(--rule);
+    background: var(--paper-warm);
+  }
+  .big-number-figure {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(56px, 14vw, 96px);
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .big-number-unit { font-size: clamp(16px, 3vw, 20px); font-weight: 300; color: var(--ink-light); margin-top: 8px; }
+  .big-number-desc { font-size: clamp(11px, 1.8vw, 13px); color: var(--ink-muted); margin-top: 10px; font-family: 'DM Mono', monospace; }
+
+  .cta-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 44px 24px;
+    margin: 56px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    border: 36px solid var(--accent);
+    border-radius: 50%;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  .cta-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-warm); margin-bottom: 16px; }
+  .cta-headline { font-family: 'Noto Serif JP', serif; font-size: clamp(20px, 4vw, 30px); font-weight: 700; line-height: 1.5; margin-bottom: 14px; }
+  .cta-sub { font-size: clamp(13px, 2vw, 14px); color: rgba(250,248,245,0.65); margin-bottom: 32px; line-height: 1.8; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 36px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-btn:hover { background: var(--accent-warm); }
+  .cta-note { font-size: 11px; color: rgba(250,248,245,0.4); margin-top: 14px; font-family: 'DM Mono', monospace; }
+
+  .source-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    margin-top: 56px;
+    line-height: 2;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
+  @media (max-width: 480px) {
+    .article-wrap { padding: 32px 16px 64px; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .stat-cell { padding: 16px 12px; }
+    .data-block { padding: 24px 16px; }
+    .cta-block { padding: 36px 16px; }
+    .pull-quote { padding: 20px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-label">WeSales AI — Sales Insight</div>
+  <div class="masthead-brand">営業の現場から、データで考える。</div>
+</div>
+
+<article class="article-wrap">
+
+  <span class="category">営業 × 時間</span>
+
+  <h1>営業マンがメールに使う時間を計算したら、<em>人生が終わっていた。</em></h1>
+
+  <p class="deck">
+    1社あたり15分。たった15分と思うかもしれません。でも、それが積み重なると何時間になるか、本当に計算したことがありますか？
+  </p>
+
+  <div class="byline">
+    <div class="byline-avatar">木</div>
+    <div class="byline-info">
+      <div class="byline-name">木村 海樹</div>
+      <div class="byline-meta">WeSales株式会社 代表取締役 — 2026年5月</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <p>展示会が終わった夜、あなたはどうしていますか。</p>
+
+    <p>名刺入れには30枚、40枚、多ければ100枚を超える名刺が詰まっています。「明日、全員にフォローしなければ」と思いながら、ホテルの部屋でスーツを脱ぎ、そのまま眠りにつく。翌朝、現実が待っています。</p>
+
+    <p><strong>メールを書く時間が、どこにもない。</strong></p>
+
+    <p>これは意志の問題でも、スキルの問題でもありません。純粋に、時間の問題です。</p>
+
+    <h2>1社15分。それが積み重なると。</h2>
+
+    <p>私がWeSales AIを作る前に、まず自分自身で計算してみました。リサーチから始めて、相手の会社のことを調べて、文脈に合ったメールを書く。丁寧にやれば1社あたり最低15分かかります。</p>
+
+    <p>その15分を、枚数で掛け算してみてください。</p>
+
+  </div>
+
+  <div class="data-block">
+    <div class="data-block-label">計算式 — 1社あたり15分 × 名刺枚数</div>
+    <div class="data-row">
+      <div class="data-left">
+        <div class="data-scenario">小規模交流会</div>
+        <div class="data-cards">20枚</div>
+      </div>
+      <div class="data-time">5時間<span>半日が消える</span></div>
+    </div>
+    <div class="data-row">
+      <div class="data-left">
+        <div class="data-scenario">中規模展示会</div>
+        <div class="data-cards">50枚</div>
+      </div>
+      <div class="data-time">12.5時間<span>1.5営業日が消える</span></div>
+    </div>
+    <div class="data-row">
+      <div class="data-left">
+        <div class="data-scenario">大規模展示会</div>
+        <div class="data-cards">100枚</div>
+      </div>
+      <div class="data-time">25時間<span>3営業日以上が消える</span></div>
+    </div>
+    <div class="data-note">※ 翌日中に完了することは、物理的に不可能。</div>
+  </div>
+
+  <div class="body">
+    <p>展示会で100枚の名刺を獲得したとします。全員にパーソナライズされたメールを送るには、<strong>25時間以上</strong>かかる計算です。1営業日は8時間。つまり、3日間以上、他の仕事を一切せずにメールだけを書き続けなければなりません。</p>
+
+    <p>現実的に、翌日フォローは不可能です。</p>
+  </div>
+
+  <div class="pull-quote">
+    「あの展示会、フォローしきれなかったな」<br>そのため息の正体は、<br>意志の弱さではなく、時間の欠如です。
+  </div>
+
+  <div class="body">
+    <h2>年間で換算すると、何が起きているのか。</h2>
+
+    <p>月に2回、展示会や交流会に参加する営業マンを想定してみましょう。毎回30枚の名刺を獲得するとします。決して多くない、ごく普通の数です。</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-cell">
+      <span class="stat-num"><em>15</em>時間</span>
+      <div class="stat-label">月間のメール作成時間<br>（月60枚 × 15分）</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num"><em>180</em>時間</span>
+      <div class="stat-label">年間のメール作成時間<br>（月15時間 × 12ヶ月）</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num"><em>22</em>日</span>
+      <div class="stat-label">営業日換算<br>（180時間 ÷ 8時間）</div>
+    </div>
+  </div>
+
+  <div class="big-number">
+    <span class="big-number-figure">22</span>
+    <div class="big-number-unit">営業日 ／ 年</div>
+    <div class="big-number-desc">これだけの時間が、メール作成だけで消えています。</div>
+  </div>
+
+  <div class="body">
+    <p>1ヶ月以上の労働時間が、ただメールを書くためだけに消えています。商談でもない。提案でもない。クロージングでもない。ただ、最初の一通を送るための準備に。</p>
+
+    <p><strong>これは、あなたの問題ではありません。構造的な問題です。</strong></p>
+
+    <h2>放置された名刺の先に、何が起きているのか。</h2>
+
+    <p>時間がないからフォローできない。フォローできないから名刺が眠る。これは個人の怠慢ではなく、物理的な限界です。ただ、その限界の代償は思っているより遥かに大きいのです。</p>
+  </div>
+
+  <div class="highlight-box">
+    <strong>データ — 株式会社ハンモック調べ（2022年, n=301）</strong>
+    展示会で獲得した名刺の約4割が「あまり活用できていない」または「全く活用できていない」と回答。展示会後に翌日フォローできている企業は、わずか<strong>1.0%</strong>。そして、フォローされなかった見込み客の約<strong>8割</strong>が、2年以内に競合他社から購入しています。
+  </div>
+
+  <div class="body">
+    <p>フォローされなかった見込み客の8割が、競合から買う。この数字を初めて見たとき、私は背筋が冷たくなりました。</p>
+
+    <p>あなたが展示会で出会い、名刺を交換し、「いつか連絡しよう」と思ったまま放置した相手。その8割が、すでに競合の顧客になっている可能性があります。</p>
+
+    <p><strong>名刺を放置することは、見込み客を競合に渡すことと同義です。</strong></p>
+
+    <h2>問題は、やる気でも、スキルでもない。</h2>
+
+    <p>多くの営業マンは、フォローの大切さを知っています。パーソナライズされたメールが効果的なことも知っています。それでもできない理由は一つ、時間です。</p>
+
+    <p>1社15分。100社なら2,500分。これは「効率化」で解決できる問題ではありません。アプローチそのものを変えなければならないのです。</p>
+  </div>
+
+  <div class="pull-quote">
+    AIが書くのではない。<br>あなたをAIが再現する。
+  </div>
+
+  <div class="body">
+    <p>WeSales AIを作った理由は、この構造的な問題を解消するためです。リサーチからメール作成まで、名刺1枚あたり15分かかっていた作業を、AIが代わりに行います。しかも、テンプレートではなく、あなたの文体と文脈に合わせて。</p>
+
+    <p>送信ボタンだけ押せばいい。それだけで、25時間分の作業が終わります。</p>
+
+    <p>あなたの時間を、本来使うべき場所に戻してください。商談に、提案に、クロージングに。</p>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-eyebrow">WeSales AI — 無料トライアル実施中</div>
+    <div class="cta-headline">送信ボタンだけ押せばいい。</div>
+    <div class="cta-sub">
+      名刺をスキャンするだけで、パーソナライズされた<br>
+      営業メールをAIが自動生成。月額980円から。
+    </div>
+    <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+    <div class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</div>
+  </div>
+
+  <div class="source-note">
+    出典 ／ 参考データ<br>
+    ・展示会名刺の活用状況調査：株式会社ハンモック（2022年、n=301）<br>
+    ・展示会後フォロー実態：同上<br>
+    ・見込み客の競合流出率：Marketing Donut（2年以内に競合から購入する割合）<br>
+    ・メール作成時間の試算：WeSales株式会社調べ（1社あたりリサーチ〜送信の平均所要時間）
+  </div>
+
+</article>
+
+</body>
+</html>
