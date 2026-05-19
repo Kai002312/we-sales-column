@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>コラム | WeSales AI</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: #f7f9fc;
+    color: #0d1f3c;
+    font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: #f7f9fc;
+    border-bottom: 3px double #0d1f3c;
+    padding: 20px 24px 16px;
+    text-align: center;
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: #7a8fa8;
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #0d1f3c;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .header-desc {
+    font-size: 13px;
+    color: #2d4163;
+    margin-top: 8px;
+    line-height: 1.7;
+  }
+
+  /* ── Grid ── */
+  .grid-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: #fff;
+    border: 1px solid #c8d8ec;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(13,31,60,0.12);
+  }
+  .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #0d1f3c 0%, #2563c0 100%);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .card-thumb-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  .card-thumb::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 80px; height: 80px;
+    border: 16px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+
+  .card-body {
+    padding: 20px 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .card-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #2563c0;
+    border-top: 2px solid #2563c0;
+    padding-top: 4px;
+  }
+  .card-date {
+    font-size: 11px;
+    color: #7a8fa8;
+    font-family: monospace;
+  }
+  .card-title {
+    font-size: clamp(14px, 2vw, 16px);
+    font-weight: 700;
+    color: #0d1f3c;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #2d4163;
+    line-height: 1.75;
+    flex: 1;
+  }
+  .card-arrow {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #2563c0;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-wrap { padding: 32px 16px 64px; }
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">WeSales AI — Column</div>
+  <div class="header-title">コラム</div>
+  <div class="header-desc">営業の現場から、データで考える。</div>
+</div>
+
+<div class="grid-wrap">
+  <div class="grid">
+
+    <!-- 記事①（最初の記事） -->
+    <a class="card" href="https://kai002312.github.io/we-sales-column/article-1.html" target="_blank">
+      <div class="card-thumb">
+        <div class="card-thumb-label">営業マンがメールに使う時間を計算したら、人生が終わっていた。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-category">営業 × 時間</span>
+          <span class="card-date">2026.05.19</span>
+        </div>
+        <div class="card-title">営業マンがメールに使う時間を計算したら、人生が終わっていた。</div>
+        <div class="card-desc">1社あたり15分。たった15分と思うかもしれません。でも、それが積み重なると年間22営業日が消えていきます。</div>
+        <span class="card-arrow">続きを読む →</span>
+      </div>
+    </a>
+
+    <!-- 記事②以降はここにコピペで追加 -->
+
+  </div>
+</div>
+
+</body>
+</html>
