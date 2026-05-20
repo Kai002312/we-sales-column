@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>「返信が来ない」の本当の理由。それは文章力ではなく、タイミングだった。 | WeSales AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1f3c;
+      --blue: #2563c0;
+      --white: #f7f9fc;
+      --gray-light: #e8ecf2;
+      --gray-mid: #8a96a8;
+      --text: #1a2840;
+      --line-height: 1.9;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kino Gothic ProN', 'Yu Gothic', YuGothic, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      font-size: 16px;
+      line-height: var(--line-height);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--navy);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .site-header a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      opacity: .7;
+      letter-spacing: .04em;
+    }
+    .site-header a:hover { opacity: 1; }
+    .site-header span { color: rgba(247,249,252,.35); font-size: 12px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--navy);
+      padding: 56px 24px 52px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(37,99,192,.12);
+      border: 1px solid rgba(37,99,192,.3);
+      border-radius: 2px;
+      padding: 4px 12px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.45;
+      letter-spacing: -.01em;
+      max-width: 720px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #5b9cf6;
+      position: relative;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(247,249,252,.6);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(247,249,252,.45);
+      letter-spacing: .04em;
+    }
+    .meta-avatar {
+      width: 32px; height: 32px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--white);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .lead {
+      font-size: 18px;
+      line-height: 1.85;
+      color: #2a3a52;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .content h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 52px 0 20px;
+      line-height: 1.4;
+      letter-spacing: -.01em;
+    }
+
+    .content p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: #374558;
+      margin-bottom: 20px;
+    }
+
+    .content strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* ── Quote block ── */
+    .quote-block {
+      border-left: 3px solid var(--blue);
+      background: #f0f4fb;
+      padding: 20px 24px;
+      margin: 32px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .quote-block p {
+      font-size: 15px;
+      color: #2a3a52;
+      margin: 0;
+      font-style: italic;
+      line-height: 1.75;
+    }
+
+    /* ── Data card ── */
+    .data-section {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 32px 28px;
+      margin: 40px 0;
+      color: var(--white);
+    }
+    .data-section .data-label {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(247,249,252,.45);
+      margin-bottom: 20px;
+    }
+    .data-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(247,249,252,.08);
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #5b9cf6;
+      line-height: 1;
+      min-width: 80px;
+      letter-spacing: -.02em;
+    }
+    .data-desc {
+      font-size: 14px;
+      color: rgba(247,249,252,.7);
+      line-height: 1.7;
+      padding-top: 4px;
+    }
+    .data-desc strong {
+      color: var(--white);
+      font-weight: 700;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    /* ── Share quote ── */
+    .share-quote {
+      border: 1.5px solid var(--blue);
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin: 40px 0;
+      position: relative;
+      background: #f4f7ff;
+    }
+    .share-quote::before {
+      content: '✕ シェアされやすい一文';
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: var(--blue);
+      position: absolute;
+      top: -9px;
+      left: 20px;
+      background: #f4f7ff;
+      padding: 0 8px;
+    }
+    .share-quote p {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── Spacer text ── */
+    .spacer-text {
+      text-align: center;
+      color: var(--gray-mid);
+      font-size: 14px;
+      margin: 36px 0;
+      line-height: 1.8;
+    }
+    .spacer-text strong {
+      display: block;
+      font-size: 18px;
+      color: var(--navy);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    /* ── CTA ── */
+    .cta-block {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 44px 32px;
+      text-align: center;
+      margin: 56px 0 0;
+    }
+    .cta-block .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: rgba(247,249,252,.45);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .cta-block h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .cta-block p {
+      font-size: 14px;
+      color: rgba(247,249,252,.55);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: .03em;
+      transition: background .2s;
+    }
+    .cta-btn:hover { background: #1a4fa0; }
+    .cta-note {
+      font-size: 12px;
+      color: rgba(247,249,252,.3);
+      margin-top: 14px;
+    }
+
+    /* ── Source ── */
+    .source {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-light);
+      font-size: 12px;
+      color: var(--gray-mid);
+      line-height: 1.8;
+    }
+    .source span { display: block; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(247,249,252,.35);
+      letter-spacing: .04em;
+    }
+    .site-footer a {
+      color: rgba(247,249,252,.5);
+      text-decoration: none;
+    }
+    .site-footer a:hover { color: var(--white); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 44px 20px 40px; }
+      .content { padding: 40px 20px 64px; }
+      .data-num { font-size: 26px; min-width: 64px; }
+      .cta-block { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="https://column.we-sales.com">← コラム一覧</a>
+    <span>／</span>
+    <a href="https://we-sales.com">WeSales AI</a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="tag">営業 × 返信率</div>
+    <h1>「返信が来ない」の本当の理由。<br>それは文章力ではなく、<em>タイミング</em>だった。</h1>
+    <p class="hero-sub">送ったのに、音沙汰なし。あの沈黙の正体をデータで解明します。</p>
+    <div class="meta">
+      <div class="meta-avatar">木</div>
+      <div>
+        <div>木村 海樹　WeSales株式会社 代表取締役</div>
+        <div>2026年5月</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="content">
+
+    <p class="lead">
+      「丁寧に書いたのに、返信が来ない。」<br>
+      営業メールを送った後のあの静寂は、自信を少しずつ削っていきます。でも、その沈黙の原因は、あなたの文章力でも、相手の興味のなさでもないかもしれません。
+    </p>
+
+    <p>
+      ある日、私は一人の営業マンに話を聞きました。彼は毎晩、展示会で受け取った名刺の相手に向けて、一通一通、丁寧なフォローメールを書いていました。文章は自然で、押しつけがましくもない。それでも、返信率は10%を下回っていたといいます。
+    </p>
+
+    <p>
+      「自分の書き方が悪いんだと思って、何度も書き直しました。でも、何が問題なのかわからなかった。」
+    </p>
+
+    <p>
+      彼の問題は、文章ではありませんでした。<strong>送るタイミングが、遅すぎた。</strong>それだけでした。
+    </p>
+
+    <h2>人の記憶は、72時間で消える。</h2>
+
+    <p>
+      エビングハウスの忘却曲線をご存じでしょうか。人間は、何かを経験した後の24時間で記憶の約67%を失います。72時間後には、80%近くが薄れてしまいます。
+    </p>
+
+    <p>
+      展示会でブースを訪れた人が、あなたのことを鮮明に覚えているのは、せいぜい翌日まで。3日後には「どのブースだったっけ」という感覚になり、1週間後には名前すら曖昧になります。
+    </p>
+
+    <div class="data-section">
+      <div class="data-label">DATA — フォロータイミングと返信率の関係</div>
+      <div class="data-row">
+        <div class="data-num">27%</div>
+        <div class="data-desc">
+          <strong>翌日以内のフォロー</strong>
+          相手がまだ「あのブースの人」として記憶している。文脈が生きている。
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-num">12%</div>
+        <div class="data-desc">
+          <strong>2〜3日後のフォロー</strong>
+          記憶が薄れ始める。「誰だっけ」という状態でメールを開封される。
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-num">4%</div>
+        <div class="data-desc">
+          <strong>1週間後以降のフォロー</strong>
+          ほぼ見知らぬ人と同じ。どれだけ丁寧な文章でも、記憶との紐付けが難しい。
+        </div>
+      </div>
+    </div>
+
+    <p>
+      翌日と1週間後では、返信率に最大7倍近い差が生まれるというデータもあります。あなたが1週間かけて丁寧に書いたメールより、翌日に送った「ざっくりしたメール」の方が、ずっと響く可能性があります。
+    </p>
+
+    <p>
+      これは、文章力の問題ではありません。<strong>物理的なタイミングの問題です。</strong>
+    </p>
+
+    <h2>では、なぜ翌日に送れないのか。</h2>
+
+    <p>
+      この話をすると、必ずこう返ってきます。「それはわかってる。でも、翌日に送れないから困ってるんだ。」
+    </p>
+
+    <p>
+      そうです。わかっているのに、できない。これが現場の現実です。
+    </p>
+
+    <p>
+      展示会の翌日には、通常業務が待っています。既存顧客からの連絡、社内の報告、別の商談の準備。名刺のフォローは、後回しにしても誰にも怒られません。だから、後回しになる。
+    </p>
+
+    <div class="quote-block">
+      <p>「展示会に行った翌日は、むしろ一番忙しいんです。名刺を整理する時間すら、取れないことがある。」（営業歴8年・医療機器メーカー勤務）</p>
+    </div>
+
+    <p>
+      これは、意志が弱いわけでも、段取りが悪いわけでもありません。展示会でのフォローという作業が、<strong>構造的に後回しにされやすい設計</strong>になっているのです。
+    </p>
+
+    <h2>「パーソナライズ」という罠。</h2>
+
+    <p>
+      もうひとつ、返信率を下げている理由があります。多くの営業マンは「パーソナライズされたメールが効果的」と知っています。だからこそ、相手の会社を調べ、共通の話題を探し、丁寧に文章を組み立てようとします。
+    </p>
+
+    <p>
+      その姿勢は正しい。でも、それが「送れない理由」にもなってしまっています。
+    </p>
+
+    <p>
+      1社ごとにリサーチして文章を書けば、1通に15分かかります。50社なら12.5時間。翌日中には物理的に不可能な量です。
+    </p>
+
+    <p>
+      結果、「ちゃんとできないなら、送らない方がいい」という判断が生まれる。完璧主義が、行動を止めているのです。
+    </p>
+
+    <div class="spacer-text">
+      <strong>「速さ」と「丁寧さ」は、本当にトレードオフなのか。</strong>
+      データは「速く送ること」の方が、「丁寧に書くこと」より返信率に貢献すると言っています。
+    </div>
+
+    <h2>速さと質を両立するために、何が必要か。</h2>
+
+    <p>
+      答えはシンプルです。リサーチと文章生成を、人間がやらなければいい。
+    </p>
+
+    <p>
+      名刺の情報をもとに、相手の会社を調べて、あなたの文体で、文脈に合ったメールを自動で作れるなら。翌日に、50社全員に、パーソナライズされたメールを送ることができます。
+    </p>
+
+    <p>
+      あなたがやるのは、確認して送信ボタンを押すだけ。それだけで、7倍の返信率の差を自分側に引き寄せることができます。
+    </p>
+
+    <!-- シェアされやすい一文 -->
+    <div class="share-quote">
+      <p>返信が来ないのは、文章力の問題じゃない。1週間後に送ったから、相手の記憶から消えていただけだ。</p>
+    </div>
+
+    <p>
+      WeSales AIは、名刺をスキャンするだけで、あなたの文体を再現したパーソナライズメールを自動生成します。テンプレートではなく、あなたらしい言葉で、翌日に、全員に。
+    </p>
+
+    <p>
+      あの展示会の翌朝、返信が来る営業マンと来ない営業マンの差は、文章の巧拙ではありませんでした。<strong>送ったかどうか、だけでした。</strong>
+    </p>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <div class="cta-eyebrow">WeSales AI — 無料トライアル実施中</div>
+      <h3>翌日に、全員に、あなたらしいメールを。</h3>
+      <p>名刺をスキャンするだけで、パーソナライズされた<br>営業メールをAIが自動生成。月額980円から。</p>
+      <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+      <div class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</div>
+    </div>
+
+    <!-- Source -->
+    <div class="source">
+      <strong style="color:#4a5a72; font-size:13px;">出典 ／ 参考データ</strong>
+      <span>・エビングハウスの忘却曲線：Hermann Ebbinghaus『記憶について』（1885年）</span>
+      <span>・フォロータイミングと返信率：InsideSales.com調べ（Lead Response Management Study）</span>
+      <span>・展示会名刺の活用状況調査：株式会社ハンモック（2022年、n=301）</span>
+      <span>・メール作成時間の試算：WeSales株式会社調べ（1社あたりリサーチ〜送信の平均所要時間）</span>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div>&copy; 2026 WeSales株式会社 &nbsp;｜&nbsp; <a href="https://we-sales.com">公式サイト</a> &nbsp;｜&nbsp; <a href="https://column.we-sales.com">コラム一覧</a></div>
+  </footer>
+
+</body>
+</html>
