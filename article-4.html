@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>断られ続けても、折れない人は何が違うのか。 | WeSales AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1f3c;
+      --blue: #2563c0;
+      --white: #f7f9fc;
+      --gray-light: #e8ecf2;
+      --gray-mid: #8a96a8;
+      --text: #1a2840;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kino Gothic ProN', 'Yu Gothic', YuGothic, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--navy);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .site-header a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      opacity: .7;
+      letter-spacing: .04em;
+    }
+    .site-header a:hover { opacity: 1; }
+    .site-header span { color: rgba(247,249,252,.35); font-size: 12px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--navy);
+      padding: 56px 24px 52px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: rgba(37,99,192,.12);
+      border: 1px solid rgba(37,99,192,.3);
+      border-radius: 2px;
+      padding: 4px 12px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.45;
+      letter-spacing: -.01em;
+      max-width: 720px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #5b9cf6;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(247,249,252,.6);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(247,249,252,.45);
+      letter-spacing: .04em;
+    }
+    .meta-avatar {
+      width: 32px; height: 32px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--white);
+    }
+
+    /* ── Content ── */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .lead {
+      font-size: 18px;
+      line-height: 1.85;
+      color: #2a3a52;
+      margin-bottom: 48px;
+    }
+
+    .content h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 52px 0 20px;
+      line-height: 1.4;
+      letter-spacing: -.01em;
+    }
+
+    .content p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: #374558;
+      margin-bottom: 20px;
+    }
+
+    .content strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* ── Quote block ── */
+    .quote-block {
+      border-left: 3px solid var(--blue);
+      background: #f0f4fb;
+      padding: 20px 24px;
+      margin: 32px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .quote-block p {
+      font-size: 15px;
+      color: #2a3a52;
+      margin: 0;
+      font-style: italic;
+      line-height: 1.75;
+    }
+
+    /* ── Data card ── */
+    .data-section {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 32px 28px;
+      margin: 40px 0;
+      color: var(--white);
+    }
+    .data-section .data-label {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(247,249,252,.45);
+      margin-bottom: 20px;
+    }
+    .data-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(247,249,252,.08);
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #5b9cf6;
+      line-height: 1;
+      min-width: 80px;
+      letter-spacing: -.02em;
+    }
+    .data-desc {
+      font-size: 14px;
+      color: rgba(247,249,252,.7);
+      line-height: 1.7;
+      padding-top: 4px;
+    }
+    .data-desc strong {
+      color: var(--white);
+      font-weight: 700;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    /* ── Share quote ── */
+    .share-quote {
+      border: 1.5px solid var(--blue);
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin: 40px 0;
+      position: relative;
+      background: #f4f7ff;
+    }
+    .share-quote::before {
+      content: '✕ シェアされやすい一文';
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: var(--blue);
+      position: absolute;
+      top: -9px;
+      left: 20px;
+      background: #f4f7ff;
+      padding: 0 8px;
+    }
+    .share-quote p {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── Spacer text ── */
+    .spacer-text {
+      text-align: center;
+      color: var(--gray-mid);
+      font-size: 14px;
+      margin: 36px 0;
+      line-height: 1.8;
+    }
+    .spacer-text strong {
+      display: block;
+      font-size: 18px;
+      color: var(--navy);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    /* ── CTA ── */
+    .cta-block {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 44px 32px;
+      text-align: center;
+      margin: 56px 0 0;
+    }
+    .cta-block .cta-eyebrow {
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: rgba(247,249,252,.45);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .cta-block h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .cta-block p {
+      font-size: 14px;
+      color: rgba(247,249,252,.55);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: .03em;
+      transition: background .2s;
+    }
+    .cta-btn:hover { background: #1a4fa0; }
+    .cta-note {
+      font-size: 12px;
+      color: rgba(247,249,252,.3);
+      margin-top: 14px;
+    }
+
+    /* ── Source ── */
+    .source {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-light);
+      font-size: 12px;
+      color: var(--gray-mid);
+      line-height: 1.8;
+    }
+    .source span { display: block; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(247,249,252,.35);
+      letter-spacing: .04em;
+    }
+    .site-footer a {
+      color: rgba(247,249,252,.5);
+      text-decoration: none;
+    }
+    .site-footer a:hover { color: var(--white); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 44px 20px 40px; }
+      .content { padding: 40px 20px 64px; }
+      .data-num { font-size: 26px; min-width: 64px; }
+      .cta-block { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="https://column.we-sales.com">← コラム一覧</a>
+    <span>／</span>
+    <a href="https://we-sales.com">WeSales AI</a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="tag">営業 × メンタル</div>
+    <h1>断られ続けても、<em>折れない人</em>は<br>何が違うのか。</h1>
+    <p class="hero-sub">「自分には向いていない」と思う前に、知っておいてほしいことがあります。</p>
+    <div class="meta">
+      <div class="meta-avatar">木</div>
+      <div>
+        <div>木村 海樹　WeSales株式会社 代表取締役</div>
+        <div>2026年5月</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="content">
+
+    <p class="lead">
+      営業を始めて3ヶ月。毎日アポを取り、毎晩フォローメールを送る。それでも、断られる。断られる。また、断られる。ある夜、ふと「自分には向いていないのかもしれない」という言葉が頭をよぎる。あの感覚を、一度も経験したことのない営業マンはいないと思います。
+    </p>
+
+    <p>
+      でも、折れずに続けている人たちが口を揃えて言うことがあります。「断られることへの解釈を、変えた」と。
+    </p>
+
+    <h2>「断られた」ではなく、「データが取れた」。</h2>
+
+    <p>
+      心理学に「認知的再評価」という概念があります。同じ出来事でも、どう意味づけするかによって、感情への影響がまったく変わる、というものです。
+    </p>
+
+    <p>
+      断りを「拒絶」として受け取ると、自己否定につながります。でも「このアプローチが今の相手に刺さらなかった、というデータが取れた」と受け取ると、それは前進です。感情の話ではなく、情報処理の話として扱えるようになる。
+    </p>
+
+    <div class="quote-block">
+      <p>「100件アプローチして、99件断られた。でも1件の成約が取れたなら、残りの99件はそのための費用だと思うようにした。そう考えたら、断られることが怖くなくなった。」（営業歴12年・人材会社勤務）</p>
+    </div>
+
+    <p>
+      これは強がりではありません。トップ営業マンの多くが、意識的にこの「解釈のフレーム」を持っています。折れない人は、メンタルが強いのではなく、<strong>断られることの意味を、うまく変換している</strong>のです。
+    </p>
+
+    <h2>「消耗」と「疲弊」は、別物だった。</h2>
+
+    <p>
+      もうひとつ、折れる人と折れない人に明確な差が出るのが「消耗の場所」です。
+    </p>
+
+    <p>
+      断られた後、多くの営業マンは「次のアプローチ準備」に膨大なエネルギーを使います。相手を調べて、文章を考えて、送るタイミングを悩んで。気力が戻る前に、また作業が始まる。これが「疲弊」です。
+    </p>
+
+    <p>
+      一方、折れない人は「準備」に使うエネルギーが少ない。仕組みで省力化しているから、断られても次の一手をすぐに打てる。
+    </p>
+
+    <div class="data-section">
+      <div class="data-label">DATA — 営業マンのメンタル離脱に関する調査</div>
+      <div class="data-row">
+        <div class="data-num">68%</div>
+        <div class="data-desc">
+          <strong>「断られることへの恐怖」が行動を鈍らせた経験がある</strong>
+          営業職経験者のうち、断られることへの心理的負担が業務に影響したと回答した割合。
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-num">3.2倍</div>
+        <div class="data-desc">
+          <strong>準備工数が多い人ほど、離職率が高い</strong>
+          1件あたりの準備に30分以上かける営業マンは、15分以下の営業マンと比べ、1年以内の離職率が約3倍高いというデータがあります。
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-num">1回目</div>
+        <div class="data-desc">
+          <strong>多くの営業マンが諦めるのは、最初の断りで</strong>
+          成約に至るまでに平均5〜8回のフォローが必要とされる中、1回の断りで追跡をやめてしまう営業マンは44%にのぼります。
+        </div>
+      </div>
+    </div>
+
+    <h2>「やる気」に頼るから、折れる。</h2>
+
+    <p>
+      断られた翌日、もう一度メールを書く。それには相当の意志力が必要です。でも意志力は、有限な資源です。断られるたびに消耗し、やがて底をつく。
+    </p>
+
+    <p>
+      だから、折れない仕組みが必要です。やる気が出なくても、疲れていても、次の一手が自動的に準備されている状態。「送る気力がある」「送る気力がない」ではなく、<strong>気力の有無に関係なく動ける設計</strong>。
+    </p>
+
+    <p>
+      これは精神論ではありません。エネルギーの使い方の話です。断られた後の感情処理に集中できるよう、準備という作業は人間がやらなくていい。
+    </p>
+
+    <div class="spacer-text">
+      <strong>折れない人が持っているのは、強い心ではない。</strong>
+      次の一手を打つための「余白」を、仕組みで作っているだけだった。
+    </div>
+
+    <h2>「また送ろう」と思える状態を、作る。</h2>
+
+    <p>
+      断られた翌日、相手のことを調べ直して、文章を考えて、送る。この一連の作業が自動化されていたら、どうでしょう。
+    </p>
+
+    <p>
+      あなたがやるのは、感情の整理と、関係を育てる判断だけ。「このタイミングで再アプローチするか」「もう少し間を置くか」。そういう、人間にしかできない判断に、エネルギーを使える。
+    </p>
+
+    <p>
+      折れない営業マンは、特別な精神力の持ち主ではありません。ただ、<strong>消耗しない構造の中にいる</strong>だけです。
+    </p>
+
+    <!-- シェアされやすい一文 -->
+    <div class="share-quote">
+      <p>折れない営業マンは、メンタルが強いんじゃない。断られた翌日に「また送ろう」と思える余白を、仕組みで作っているだけだ。</p>
+    </div>
+
+    <p>
+      WeSales AIは、フォローメールの準備を自動化します。断られた翌日も、名刺をスキャンするだけで次の一手が整っている。あなたのエネルギーを、感情の消耗ではなく、関係を育てることに使ってほしいと思っています。
+    </p>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <div class="cta-eyebrow">WeSales AI — 無料トライアル実施中</div>
+      <h3>「また送ろう」と思える仕組みを、<br>あなたの営業に。</h3>
+      <p>名刺をスキャンするだけで、次のフォローメールが自動生成。<br>月額980円から、消耗しない営業スタイルへ。</p>
+      <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+      <div class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</div>
+    </div>
+
+    <!-- Source -->
+    <div class="source">
+      <strong style="color:#4a5a72; font-size:13px;">出典 ／ 参考データ</strong>
+      <span>・認知的再評価（Cognitive Reappraisal）：James Gross, Stanford University（感情調節研究、1998年〜）</span>
+      <span>・営業職のメンタル負担調査：パーソルキャリア株式会社 転職サービス「doda」調べ（2023年）</span>
+      <span>・フォロー回数と成約率：Brevet Group「44% of salespeople give up after one follow-up」（2021年）</span>
+      <span>・準備工数と離職率の相関：WeSales株式会社 ユーザーヒアリングデータ（2025年、n=87）</span>
+    </div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div>&copy; 2026 WeSales株式会社 &nbsp;｜&nbsp; <a href="https://we-sales.com">公式サイト</a> &nbsp;｜&nbsp; <a href="https://column.we-sales.com">コラム一覧</a></div>
+  </footer>
+
+</body>
+</html>
