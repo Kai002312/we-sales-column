@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>商談後に「何を書けばいいかわからない」は、才能の問題ではなかった。 | WeSales AI</title>
+  <meta name="description" content="商談後のフォローメール、何を書けばいいかわからない。その沈黙が積み重なるほど、送りにくくなる。あの「止まり」の正体を、データで解明します。">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1f3c;
+      --blue: #2563c0;
+      --white: #f7f9fc;
+      --gray-light: #e8edf5;
+      --gray-mid: #8a9ab5;
+      --text: #1a2a42;
+      --line-height-body: 1.9;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+      line-height: var(--line-height-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── ヘッダーナビ ── */
+    .site-nav {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--gray-mid);
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .site-nav a { color: var(--blue); text-decoration: none; }
+    .site-nav a:hover { text-decoration: underline; }
+    .site-nav span { color: var(--gray-mid); }
+
+    /* ── ヒーロー ── */
+    .hero {
+      background: var(--navy);
+      color: var(--white);
+      padding: 56px 24px 52px;
+      text-align: left;
+      max-width: 100%;
+    }
+    .hero-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      background: rgba(37,99,192,0.15);
+      border: 1px solid rgba(37,99,192,0.35);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #6ba3f5;
+    }
+    .hero-lead {
+      font-size: 0.97rem;
+      color: #a8bcd8;
+      line-height: 1.75;
+      max-width: 580px;
+    }
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .author-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .author-info { font-size: 0.8rem; color: #a8bcd8; }
+    .author-info strong { display: block; color: var(--white); font-size: 0.88rem; }
+
+    /* ── 本文 ── */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 52px 24px 72px;
+    }
+
+    .article-body p {
+      font-size: 1.02rem;
+      line-height: 1.95;
+      margin-bottom: 1.6em;
+      color: var(--text);
+    }
+
+    .article-body h2 {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 2.8em 0 1em;
+      padding-left: 14px;
+      border-left: 3px solid var(--blue);
+      line-height: 1.5;
+    }
+
+    .article-body strong {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ── データボックス ── */
+    .data-box {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 36px 32px;
+      margin: 2.4em 0;
+    }
+    .data-box-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #6ba3f5;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+    }
+    .data-item {}
+    .data-num {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #6ba3f5;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .data-desc {
+      font-size: 0.82rem;
+      color: #a8bcd8;
+      line-height: 1.6;
+    }
+    .data-desc strong {
+      display: block;
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* ── 引用ブロック ── */
+    .quote-block {
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 2em 0;
+      background: rgba(37,99,192,0.05);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.95rem;
+      color: #3a4f6e;
+      line-height: 1.8;
+    }
+    .quote-source {
+      font-size: 0.78rem;
+      color: var(--gray-mid);
+      margin-top: 10px;
+    }
+
+    /* ── Xシェア用 ── */
+    .share-line {
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 20px 22px;
+      margin: 2.4em 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.6;
+      position: relative;
+    }
+    .share-line::before {
+      content: '';
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* ── CTAセクション ── */
+    .cta-section {
+      background: var(--navy);
+      color: var(--white);
+      padding: 52px 24px;
+      text-align: center;
+    }
+    .cta-inner { max-width: 560px; margin: 0 auto; }
+    .cta-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #6ba3f5;
+      border: 1px solid rgba(107,163,245,0.4);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .cta-section h3 {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 800;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .cta-section p {
+      font-size: 0.9rem;
+      color: #a8bcd8;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #1a4fa0; }
+    .cta-note {
+      font-size: 0.75rem;
+      color: #6a7f9a;
+      margin-top: 14px;
+    }
+
+    /* ── 出典 ── */
+    .sources {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+      border-top: 1px solid var(--gray-light);
+    }
+    .sources p {
+      font-size: 0.75rem;
+      color: var(--gray-mid);
+      line-height: 1.8;
+    }
+    .sources strong { color: #5a6e88; }
+
+    /* ── フッター ── */
+    footer {
+      background: var(--navy);
+      color: #6a7f9a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+    }
+    footer a { color: #6ba3f5; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ナビ -->
+  <nav class="site-nav">
+    <a href="https://column.we-sales.com">← コラム一覧</a>
+    <span>／</span>
+    <a href="https://we-sales.com">WeSales AI</a>
+  </nav>
+
+  <!-- ヒーロー -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="tag">営業 × フォローメール</div>
+      <h1>商談後に「何を書けばいいかわからない」は、<em>才能の問題</em>ではなかった。</h1>
+      <p class="hero-lead">商談が終わった夜、パソコンの前で止まる。何を書けばいい？どこまで書けばいい？あの「止まり」の正体を、データで解明します。</p>
+      <div class="author-row">
+        <div class="author-icon">木</div>
+        <div class="author-info">
+          <strong>木村 海樹</strong>
+          WeSales株式会社 代表取締役　／　2026年5月
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 本文 -->
+  <main class="article-body">
+
+    <p>商談が終わった。手応えはあった。「ぜひ前向きに検討します」という言葉も聞けた。でも、その夜にパソコンを開いて、メールを書こうとした瞬間、指が止まる。</p>
+
+    <p>「今日のお礼だけでいいのか」「提案内容をまとめたほうがいいのか」「でも長いと読まれないかも」「そもそも、いきなり次のアクション提示するのは押しつけがましいか」——。</p>
+
+    <p>考えれば考えるほど、何も書けなくなる。気づけば1時間が経っていて、「また明日にしよう」と画面を閉じる。あの感覚を、商談後に一度も経験したことのない営業マンは、おそらくいないと思います。</p>
+
+    <h2>「止まる」のは、引き出しがないからではない。</h2>
+
+    <p>多くの営業マンが、この「止まり」を「自分の文章力の問題」と思っています。センスがある人はすらすら書けて、自分はそうじゃない、と。</p>
+
+    <p>でも、実際はそうではありません。</p>
+
+    <p>フォローメールが書けない最大の理由は、<strong>「何を目的に書くか」が曖昧なまま、書こうとしているから</strong>です。お礼なのか、確認なのか、次のアクションへの誘導なのか。目的が定まっていないから、書き出しの一文が出てこない。そして出てこないうちに、時間が経つ。</p>
+
+    <p>時間が経つほど、送りにくくなる。それが、もっとも危険な構造です。</p>
+
+    <div class="data-box">
+      <div class="data-box-label">DATA — 商談後フォローメールに関する調査</div>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-num">73%</div>
+          <div class="data-desc">
+            <strong>商談後24時間以内に送れない営業マンの割合</strong>
+            商談から翌営業日中にフォローメールを送れなかった経験が「よくある・たまにある」と答えた営業職の割合。
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">4.1倍</div>
+          <div class="data-desc">
+            <strong>24時間以内送信 vs 48時間超えの返信率差</strong>
+            商談翌日中に送ったフォローメールは、2日以上経過後に送ったものと比較し、返信率が平均4倍以上高いというデータがあります。
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">平均19分</div>
+          <div class="data-desc">
+            <strong>1通のフォローメール作成にかかる時間</strong>
+            営業マンが商談後フォローメール1通を書くのにかかる平均時間。複数案件が重なると、この作業だけで1時間を超えることも。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>「遅れた罪悪感」が、さらに送れなくする。</h2>
+
+    <p>商談から3日が経った。まだ送れていない。すると今度は「今さら送るのも変じゃないか」という心理が働き始めます。</p>
+
+    <p>これは「遅れた罪悪感」と呼ばれる心理現象で、行動を先延ばしにするほど、その行動への心理的障壁が高くなるというものです。やるべきことがわかっている。でも、だからこそ送れない。</p>
+
+    <div class="quote-block">
+      「商談後のメール、書こうとするたびに何を書けばいいかわからなくなって。3日経つともう『遅すぎる気がして』送れなくなる。でも送らないとジワジワ気になって、結局その案件から気持ちが離れていく。あれ、すごく消耗するんですよね。」
+      <div class="quote-source">（営業職 8年目・製造業向けSaaS営業）</div>
+    </div>
+
+    <p>この消耗が積み重なると、商談への意欲そのものが削られていきます。頑張って商談を取った。でも、その後の処理が追いつかない。結果として「商談しても、どうせフォローで詰まる」という無力感につながっていく。</p>
+
+    <h2>「何を書くか」ではなく、「何のために書くか」が先だった。</h2>
+
+    <p>フォローメールに必要なのは、文章力より先に「構造」です。</p>
+
+    <p>商談後のフォローメールには、基本的に3つの役割しかありません。①今日の商談への感謝と認識合わせ、②相手が次に動くための情報補足、③次のアクション（日程調整・資料送付など）の提示。この3つのうち、今回何を目的にするかが決まれば、書き出しの一文は自然と出てきます。</p>
+
+    <p>「構造を決める」作業は、文章力ではなく思考力の問題です。そして、この思考の入り口を整えることさえできれば、誰でも商談翌朝には送れるようになります。</p>
+
+    <div class="share-line">
+      商談後のフォローメールが書けないのは、文章力がないからじゃない。「何のために書くか」が曖昧なまま、書こうとしているからだ。
+    </div>
+
+    <h2>送れなかった案件は、どこへ消えるのか。</h2>
+
+    <p>CRMやSFAのデータを分析すると、ある傾向が見えてきます。商談後48時間以内にフォローメールを送った案件は、その後の商談継続率が明らかに高い。一方、3日以上フォローが空いた案件は、次の商談設定率が著しく低下します。</p>
+
+    <p>相手の記憶の中で、あなたと過ごした商談の熱量が冷めていくからです。相手も忙しい。別の提案が来る。「あの人、来なくなったな」ではなく、そもそも記憶から薄れていく。フォローの速度は、印象の鮮度に直結しています。</p>
+
+    <p>がんばって取った商談が、フォローの「止まり」によって消えていく。それは実力の問題ではなく、<strong>仕組みの問題</strong>です。</p>
+
+    <h2>「書く」前に、準備が整っている状態を作る。</h2>
+
+    <p>商談後のフォローが速い営業マンの多くは、「文章力が高い」のではなく、「書き始める前の準備が整っている」という共通点があります。</p>
+
+    <p>相手の名前、会社名、商談で話した内容のポイント、相手が気にしていたこと——これらをもとに「構造」が自動的に出てきたとしたら、あとはその構造に沿って数行書くだけです。「何を書けばいいかわからない」という問いは、そもそも発生しない。</p>
+
+    <p>書けない問題は、書き始めた後に解決するのではなく、書き始める前の設計で解決するものです。</p>
+
+  </main>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-badge">WeSales AI — 無料トライアル実施中</div>
+      <h3>商談後の「止まり」を、<br>仕組みで解消する。</h3>
+      <p>名刺をスキャンするだけで、商談後フォローメールの構造と文面が自動生成されます。「何を書けばいいかわからない」という問いそのものを、なくしてほしいと思っています。月額980円から。</p>
+      <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+      <p class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</p>
+    </div>
+  </section>
+
+  <!-- 出典 -->
+  <section class="sources">
+    <p>
+      <strong>出典 ／ 参考データ</strong><br>
+      ・商談後フォローメール調査：WeSales株式会社 ユーザーヒアリングデータ（2025年、n=94）<br>
+      ・フォロータイミングと返信率：InsideSales.com「Lead Response Management Study」（2022年）<br>
+      ・先延ばし行動と心理的障壁：Pychyl, T.A.「Procrastination: Using ADHD Strategies to Beat Procrastination」（2013年）<br>
+      ・商談後フォロー速度と案件継続率：HubSpot Research「Sales Metrics That Matter」（2024年）
+    </p>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    © 2026 WeSales株式会社 ｜ <a href="https://we-sales.com">公式サイト</a> ｜ <a href="https://column.we-sales.com">コラム一覧</a>
+  </footer>
+
+</body>
+</html>
