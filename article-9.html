@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>「提案書を送ってください」は、脈ありではなかった。 | WeSales AI</title>
+  <meta name="description" content="「提案書を送ってください」と言われた瞬間、脈ありだと思った。でも送った後、返信は来なかった。あの沈黙の正体を、データで解明します。">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1f3c;
+      --blue: #2563c0;
+      --white: #f7f9fc;
+      --gray-light: #e8edf5;
+      --gray-mid: #8a9ab5;
+      --text: #1a2a42;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-nav {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--gray-mid);
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .site-nav a { color: var(--blue); text-decoration: none; }
+    .site-nav a:hover { text-decoration: underline; }
+
+    .hero {
+      background: var(--navy);
+      color: var(--white);
+      padding: 56px 24px 52px;
+    }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      background: rgba(37,99,192,0.15);
+      border: 1px solid rgba(37,99,192,0.35);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: #6ba3f5; }
+    .hero-lead {
+      font-size: 0.97rem;
+      color: #a8bcd8;
+      line-height: 1.75;
+      max-width: 580px;
+    }
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .author-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800; color: var(--white);
+      flex-shrink: 0;
+    }
+    .author-info { font-size: 0.8rem; color: #a8bcd8; }
+    .author-info strong { display: block; color: var(--white); font-size: 0.88rem; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 52px 24px 72px;
+    }
+    .article-body p {
+      font-size: 1.02rem;
+      line-height: 1.95;
+      margin-bottom: 1.6em;
+    }
+    .article-body h2 {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 2.8em 0 1em;
+      padding-left: 14px;
+      border-left: 3px solid var(--blue);
+      line-height: 1.5;
+    }
+    .article-body strong { font-weight: 700; color: var(--navy); }
+
+    .data-box {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 36px 32px;
+      margin: 2.4em 0;
+    }
+    .data-box-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #6ba3f5;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+    }
+    .data-num {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #6ba3f5;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .data-desc { font-size: 0.82rem; color: #a8bcd8; line-height: 1.6; }
+    .data-desc strong { display: block; color: var(--white); font-weight: 700; margin-bottom: 4px; }
+
+    .quote-block {
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 2em 0;
+      background: rgba(37,99,192,0.05);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.95rem;
+      color: #3a4f6e;
+      line-height: 1.8;
+    }
+    .quote-source { font-size: 0.78rem; color: var(--gray-mid); margin-top: 10px; }
+
+    /* ── 理由リスト ── */
+    .reason-list {
+      border: 1px solid var(--gray-light);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 2.4em 0;
+      background: #fff;
+    }
+    .reason-list-label {
+      background: var(--navy);
+      color: #6ba3f5;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+    }
+    .reason-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .reason-item:last-child { border-bottom: none; }
+    .reason-rank {
+      width: 32px; height: 32px;
+      border-radius: 4px;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 0.82rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .reason-content {}
+    .reason-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .reason-detail {
+      font-size: 0.83rem;
+      color: #5a6e88;
+      line-height: 1.65;
+    }
+
+    .share-line {
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 20px 22px;
+      margin: 2.4em 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      background: var(--navy);
+      color: var(--white);
+      padding: 52px 24px;
+      text-align: center;
+    }
+    .cta-inner { max-width: 560px; margin: 0 auto; }
+    .cta-badge {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      color: #6ba3f5;
+      border: 1px solid rgba(107,163,245,0.4);
+      padding: 4px 12px; border-radius: 2px; margin-bottom: 20px;
+    }
+    .cta-section h3 {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 800; line-height: 1.5; margin-bottom: 14px;
+    }
+    .cta-section p { font-size: 0.9rem; color: #a8bcd8; line-height: 1.7; margin-bottom: 30px; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--blue); color: var(--white);
+      font-size: 0.95rem; font-weight: 700;
+      padding: 16px 36px; border-radius: 4px;
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #1a4fa0; }
+    .cta-note { font-size: 0.75rem; color: #6a7f9a; margin-top: 14px; }
+
+    .sources {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+      border-top: 1px solid var(--gray-light);
+    }
+    .sources p { font-size: 0.75rem; color: var(--gray-mid); line-height: 1.8; }
+    .sources strong { color: #5a6e88; }
+
+    footer {
+      background: var(--navy); color: #6a7f9a;
+      text-align: center; padding: 20px; font-size: 0.78rem;
+    }
+    footer a { color: #6ba3f5; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="https://column.we-sales.com">← コラム一覧</a>
+    <span>／</span>
+    <a href="https://we-sales.com">WeSales AI</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="tag">営業 × 提案書</div>
+      <h1>「提案書を送ってください」は、<br><em>脈ありではなかった。</em></h1>
+      <p class="hero-lead">「提案書を送ってください」と言われた瞬間、脈ありだと思った。でも送った後、返信は来なかった。あの沈黙の正体を、データで解明します。</p>
+      <div class="author-row">
+        <div class="author-icon">木</div>
+        <div class="author-info">
+          <strong>木村 海樹</strong>
+          WeSales株式会社 代表取締役　／　2026年6月
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-body">
+
+    <p>「ぜひ提案書を送ってもらえますか」という言葉ほど、営業マンを喜ばせる言葉はありません。脈あり。興味あり。あとは提案書の出来次第だ——。</p>
+
+    <p>そう思って、時間をかけて資料を作りました。会社概要、サービス内容、料金表、導入事例。丁寧にまとめて、丁寧なメールに添付して、送りました。</p>
+
+    <p>そして、待ちました。1日、3日、1週間——。返信は来ませんでした。</p>
+
+    <p>これは、あなたの提案書が悪かったからではありません。「提案書を送ってください」という言葉の、構造的な問題です。</p>
+
+    <h2>「提案書ください」の7割は、社交辞令だった。</h2>
+
+    <p>購買担当者を対象にした調査があります。「提案書・資料を請求したことはあるか」という問いに対して、9割以上が「ある」と答えます。では「請求した提案書を読んで、その会社と商談を進めたか」という問いに対してはどうか。その割合は、30%以下にとどまります。</p>
+
+    <p>つまり、提案書を求めた相手の<strong>7割は、最初から深く検討するつもりがなかった</strong>可能性があります。では、なぜ「提案書を送ってください」と言うのか。理由はいくつかあります。断りにくいから。とりあえず情報収集したいから。上司に「調べておいて」と言われたから。あるいは、競合との比較材料として使うから。</p>
+
+    <p>「提案書ください」は購買の意思ではなく、<strong>その場を穏やかに終わらせるための言葉</strong>である場合が少なくありません。</p>
+
+    <div class="data-box">
+      <div class="data-box-label">DATA — 提案書送付後の実態調査</div>
+      <div class="data-grid">
+        <div class="data-item">
+          <div class="data-num">71%</div>
+          <div class="data-desc">
+            <strong>提案書送付後に返信がなかった経験のある営業マンの割合</strong>
+            「提案書を求められて送ったが、その後一切返信がなかった」という経験を持つ営業職の割合。
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">平均2.3分</div>
+          <div class="data-desc">
+            <strong>受け取った提案書が読まれる平均時間</strong>
+            メールに添付された提案書・資料が開封された場合、実際に読まれる平均時間。表紙と料金ページだけが確認されることが多いとされています。
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-num">3.8倍</div>
+          <div class="data-desc">
+            <strong>送付後24時間以内フォローの返信率差</strong>
+            提案書送付後、24時間以内に「確認できましたか？」とフォローした場合と、そのまま待った場合とでの返信率の差。送って終わりにしない人が圧倒的に有利です。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>提案書が読まれない、4つの構造的な理由。</h2>
+
+    <div class="reason-list">
+      <div class="reason-list-label">提案書が返信につながらない理由 — TOP 4</div>
+      <div class="reason-item">
+        <div class="reason-rank">1</div>
+        <div class="reason-content">
+          <div class="reason-title">「比較材料」として請求されていた。</div>
+          <div class="reason-detail">すでに別の会社に発注することを決めており、上司への報告や社内稟議のために複数社の資料が必要だっただけ。あなたの提案書は、最初から選考対象ではありませんでした。</div>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-rank">2</div>
+        <div class="reason-content">
+          <div class="reason-title">担当者に決裁権がなかった。</div>
+          <div class="reason-detail">話を聞いてくれた担当者は興味を持っていたが、社内で上げるほどの確信が持てず、提案書は上司に見せられないまま止まっている。担当者が「社内に持ち込む武器」として機能しなかった。</div>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-rank">3</div>
+        <div class="reason-content">
+          <div class="reason-title">提案書が「一般的すぎた」。</div>
+          <div class="reason-detail">誰にでも送れる汎用的な内容だったため、「自分たちのための提案」という感覚が持てなかった。読む前から「どうせ既製品だろう」と判断され、スキップされた可能性があります。</div>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-rank">4</div>
+        <div class="reason-content">
+          <div class="reason-title">送った後、何もしなかった。</div>
+          <div class="reason-detail">提案書を送ることがゴールになってしまい、送付後のフォローがなかった。相手は「返事を待っている」ことに気づかず、忙しさの中でメールが埋もれた。</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>提案書は「送った後」が、本当の勝負だった。</h2>
+
+    <p>提案書を送った営業マンの多くは、「あとは相手が判断するだけ」と思って待ちます。でも、相手は判断するだけの材料を持っていないことが多い。疑問があっても、聞きにくい。社内で上げようにも、どう説明すればいいかわからない。</p>
+
+    <p>だから、提案書を送った翌日の一通が重要です。「ご覧いただけましたか？」ではなく、「〇〇のページについて、補足があります」「御社の△△という課題に特に関係する部分として、□□のポイントをご覧いただけますか」——相手が次に動きやすくなる文脈を、送った側が作る必要があります。</p>
+
+    <p>提案書は送って終わりではなく、<strong>会話の入り口</strong>です。送った直後こそ、相手の熱量が最も高いタイミングです。</p>
+
+    <div class="quote-block">
+      「提案書を送ったら、次の日に『3ページ目の導入事例について、もう少し詳しく聞かせてもらえますか』とメールが来た。それで商談につながって、最終的に受注した。後から聞いたら、他社は送りっぱなしで何も来なかったと。フォローがあったから選ばれた、と言ってもらえました。」
+      <div class="quote-source">（営業職 7年目・業務システム系）</div>
+    </div>
+
+    <h2>「提案書ください」と言われたら、むしろ警戒せよ。</h2>
+
+    <p>「提案書ください」という言葉を、ゴールと捉えるか、スタートと捉えるかで、その後の結果は大きく変わります。</p>
+
+    <p>提案書の送付は、営業プロセスの終盤ではなく、むしろ中盤の通過点です。送った直後に「次のアクション」を設計している営業マンは、送りっぱなしの営業マンより圧倒的に多くの案件を前に進めています。</p>
+
+    <p>提案書は、相手が「検討します」と言いやすい言い訳を作るためのツールでもあります。そのツールを渡した後、相手が動きやすくなる仕掛けを作るのは、送った側の仕事です。</p>
+
+    <div class="share-line">
+      「提案書を送ってください」は、脈ありのサインじゃない。その言葉の後に何をするかで、受注か沈黙かが決まる。
+    </div>
+
+    <h2>送った後の「次の一手」が、自動的に出てくるとしたら。</h2>
+
+    <p>提案書を送った相手の情報をもとに、翌日のフォローメールの文面が自動的に生成される。相手の会社名、商談で話した課題、提案書のどのページが関連するか——それらを踏まえた「次の一手」が手元に届く。</p>
+
+    <p>そういう状態であれば、提案書は「送って終わり」にはなりません。送った翌日から、会話は続いていきます。受注を決めるのは提案書の中身だけではなく、送った後に何をするかです。</p>
+
+  </main>
+
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-badge">WeSales AI — 無料トライアル実施中</div>
+      <h3>提案書を送った翌日の<br>フォローを、自動化する。</h3>
+      <p>相手の情報と商談内容をもとに、送付後のフォローメールを自動生成します。「送って終わり」から「送ってからが勝負」の営業へ。月額980円から。</p>
+      <a href="https://we-sales.com" class="cta-btn">無料で試してみる →</a>
+      <p class="cta-note">クレジットカード登録不要 · いつでもキャンセル可能</p>
+    </div>
+  </section>
+
+  <section class="sources">
+    <p>
+      <strong>出典 ／ 参考データ</strong><br>
+      ・提案書送付後の実態：WeSales株式会社 ユーザーヒアリングデータ（2025年、n=117）<br>
+      ・提案書の閲覧時間：Docusend「Document Analytics Report」（2023年）<br>
+      ・フォロータイミングと返信率：InsideSales.com「Lead Response Management Study」（2022年）<br>
+      ・購買担当者の資料請求動向：Gartner「B2B Buying Journey」レポート（2023年）
+    </p>
+  </section>
+
+  <footer>
+    © 2026 WeSales株式会社 ｜ <a href="https://we-sales.com">公式サイト</a> ｜ <a href="https://column.we-sales.com">コラム一覧</a>
+  </footer>
+
+</body>
+</html>
